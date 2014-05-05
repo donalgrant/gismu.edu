@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="grid.css" media="screen"/>
+
+<script>
+
+var gismu=[ ];
+var entries=[ ];
+
+function fixedGismu() {
+// use this when we aren't on a web-server, and so can't read in an XML file
+
+  
+  entries = [ 'klama', 'gismu', 'kajdi' ];
+  fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'notes' ];
+  for (var e in entries) {
+    for (var l in fields) {
+      var g=entries[e]+'.'+fields[l];
+      gismu[g] = entries[e]+' entry for '+fields[l];
+    }
+    gismu[entries[e]+'.entry_num']=e;
+    gismu[entries[e]+'.xref']='klama, kajdi';
+  }
+}
+
+function initGismu() {
+  xmlhttp=new XMLHttpRequest();
+  xmlhttp.open("GET","gismu.xml",false);
+  xmlhttp.send();
+  xmlDoc=xmlhttp.responseXML; 
+  var x=xmlDoc.getElementsByTagName("item");
+
+  gismu = [ ];
+  entries=[ ];
+  
+  for (var i=0; i<x.length; i++) {
+  
+    var e=x[i].getElementsByTagName("gismu")[0].childNodes[0].nodeValue;
+    entries.push(e);
+    var fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'xref', 'notes' ];
+    for (var l in fields) {
+      var g=e+'.'+fields[l];
+      console.log(g);
+      gismu[g] = x[i].getElementsByTagName(fields[l])[0].childNodes[0].nodeValue;
+      console.log(gismu);
+    }
+    gismu[e+'.entry_num']=i;
+  
+  }
+
+}
+
+var current_i;
+
+function newGismu() {
+  var gr=document.getElementById('gismu_label').value;
+  for (e in entries) {
+    console.log(gr); console.log(e); console.log(entries[e]); console.log(entries[e].match(gr));
+    if (entries[e].match(gr)) {
+      current_i=e;
+      console.log('current_i set to '+current_i);
+      updateGismu();
+      return;
+    }
+  }
+}
+
+function updateGismu() {
+  var fields = [ 'rafsi', 'def', 'notes', 'gloss' ];
+  var e = entries[current_i];
+  for (var l in fields) {
+    document.getElementById(fields[l]+"_label").innerHTML=fields[l]+':<br>'+gismu[ e+'.'+fields[l] ];
+  }
+  document.getElementById('gismu_label').value=gismu[e+'.gismu'];
+  var xref = gismu[ e+'.xref' ];
+  var html='Related:<br>';
+  var xref_subs=xref.split(" ");
+  for (s in xref_subs) {
+    var gs=xref_subs[s]; console.log(gs); console.log(gismu);
+    if (gismu.hasOwnProperty(gs+'.gismu')) {
+      console.log('found match');
+      html += '<a onclick="current_i='
+              +gismu[gs+'.entry_num']
+              +';updateGismu();return false;">'
+              + gs + '</a>'
+              + ' (' + gismu[gs+'.gloss'] + ')<br> ';
+    } else {
+      console.log(gs+' was not a match');
+//      html += gs + ' ';
+    }
+  }
+  console.log(html);
+  document.getElementById('xref_label').innerHTML=html;
+}
+
+function prevGismu() {
+  current_i--;
+  if (current_i<0) { current_i=entries.length-1; }
+  updateGismu();
+}
+
+function nextGismu() {
+  current_i++;
+  current_i=current_i % entries.length;
+  updateGismu();
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div id="content" style="position:absolute; align:center">
+
+  <div id="nav" style="height:5em; position:relative; align:center">
+    
+    <div id="nav_button" style="display:table-cell; vertical-align:middle">
+      <button type="button" onclick="prevGismu()">Prev</button>
+    </div>
+    
+    <div id="gismu_entry" style="display:table-cell; vertical-align:middle">
+      <input id="gismu_label" type="text" onchange="newGismu()"></input>
+    </div>
+    
+    <div id="nav_button" style="display:table-cell; vertical-align:middle">
+      <button type="button" onclick="nextGismu()">Next</button>
+    </div>
+
+  </div>
+
+  <div id="lower" style="height:5em; position:relative; align:center">
+    <div id="gloss_label" style="display:table-cell; vertical-align:middle"></div>
+    <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
+  </div>
+  <div id="def_label"></div>
+  <div id="notes_label"></div>
+  <div id="xref_label"> </div>
+
+</div>
+
+<script>
+initGismu();
+// fixedGismu();
+current_i=0;
+updateGismu();
+
+</script>
+
+      
+</body>
+</html>
+
