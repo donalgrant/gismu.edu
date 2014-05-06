@@ -1,69 +1,72 @@
 
+div {
+margin: 0.1em;
+}
+
 #content {
+/*
 border:solid 1px #57977b;
-width:  30em;
-margin: 0.5em;
+*/
+max-width:  320px;
 }
 
 button {
 border:solid 1px #57977b;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-border-radius: 5px;
-font-size:  1.2em;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+font-size:  0.8em;
 width: 3em;
 }
 
 textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, #gismu_label, #notes_label {
 border:solid 1px #5797ab;
--moz-border-radius: 20px;
--webkit-border-radius: 20px;
-border-radius: 20px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
 background-color:#b0c4de;
 color: #ffffff;
-padding: 10pt;
+padding: 2pt;
 }
 
 #nav, #lower {
-margin:  1.0em;
-width:  25em;
+width:  100%;
 }
 
 #gismu_label {
-font-size:  2.0em;
-width: 8em;
-margin:  0.5em;
+font-size:  2em;
+margin: 0.2em 0.2em 1em 1em;
+width: 70%;
 }
 
 #def_label, #notes_label, #xref_label {
-font-size:  1em;
-height: 5em;
-width: 26em;
-margin: 0.5em;
-position: relative;
-left: 0.5em;
+font-size:  1.2em;
+width: 100%;
 }
 
 #rafsi_label {
 font-size: 1.5em;
-height: 2em;
-width: 4em;
-margin: 0.5em;
-position: relative;
-right:  -2em;
+height: 2.5em;
+width: 40%;
+float: right;
 }
+
 #xref_label {
 column-count:2;
-height:  8em;
 -moz-column-count:2; /* Firefox */
 -webkit-column-count:2; /* Safari and Chrome */
 }
+
 #gloss_label {
 font-size: 1.5em;
-width: 10em;
-margin: 0.5em;
+width: 45%;
+float: left;
 }
 
 #spacer {
 height: 0.5em;
+}
+
+.label_title {
+font-size: 0.7em;
 }

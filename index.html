@@ -6,6 +6,8 @@
 
 <script>
 
+window.scrollTo(0,1);
+
 var gismu=[ ];
 var entries=[ ];
 
@@ -68,14 +70,20 @@ function newGismu() {
 }
 
 function updateGismu() {
-  var fields = [ 'rafsi', 'def', 'notes', 'gloss' ];
+//  var fields = [ 'rafsi', 'def', 'notes', 'gloss' ];
   var e = entries[current_i];
-  for (var l in fields) {
-    document.getElementById(fields[l]+"_label").innerHTML=fields[l]+':<br>'+gismu[ e+'.'+fields[l] ];
-  }
+//  for (var l in fields) {
+//    document.getElementById(fields[l]+"_label").innerHTML=fields[l]+gismu[ e+'.'+fields[l] ];
+//  }
+
+  document.getElementById('rafsi_label').innerHTML='<div class="label_title">rafsi:</div>'        +gismu[e+'.rafsi'];
+  document.getElementById('gloss_label').innerHTML='<div class="label_title">English Gloss:</div>'+gismu[e+'.gloss'];
+  document.getElementById('def_label'  ).innerHTML='<div class="label_title">Full Def:</div>'     +gismu[e+'.def'];
+  document.getElementById('notes_label').innerHTML='<div class="label_title">Notes:</div>'        +gismu[e+'.notes'];
+
   document.getElementById('gismu_label').value=gismu[e+'.gismu'];
   var xref = gismu[ e+'.xref' ];
-  var html='Related:<br>';
+  var html='<div class="label_title">Related:</div>';
   var xref_subs=xref.split(" ");
   for (s in xref_subs) {
     var gs=xref_subs[s]; console.log(gs); console.log(gismu);
@@ -136,8 +144,8 @@ function nextGismu() {
     <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
   </div>
   <div id="def_label"></div>
-  <div id="notes_label"></div>
   <div id="xref_label"> </div>
+  <div id="notes_label"></div>
 
 </div>
 
