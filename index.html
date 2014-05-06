@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/grid.css" media="screen"/>
+<script src="js/gismu.js"></script>
+
+<script>
+window.scrollTo(0,1);
+</script>
+
+</head>
+
+<body>
+
+<div id="content" style="position:absolute; align:center">
+
+  <div id="nav" style="height:5em; position:relative; align:center">
+    
+    <div id="nav_button" style="display:table-cell; vertical-align:middle">
+      <button type="button" onclick="prevGismu()">Prev</button>
+    </div>
+    
+    <div id="gismu_entry" style="display:table-cell; vertical-align:middle">
+      <input id="gismu_label" type="text" onchange="newGismu()"></input>
+    </div>
+    
+    <div id="nav_button" style="display:table-cell; vertical-align:middle">
+      <button type="button" onclick="nextGismu()">Next</button>
+    </div>
+
+  </div>
+
+  <div id="lower" style="height:5em; position:relative; align:center">
+    <div id="gloss_label" style="display:table-cell; vertical-align:middle"></div>
+    <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
+  </div>
+  <div id="def_label"></div>
+  <div id="xref_label"> </div>
+  <div id="notes_label"></div>
+
+</div>
+
+<script>
+initGismu();
+// fixedGismu();
+current_i=0;
+updateGismu();
+
+</script>
+
+      
+</body>
+</html>
+
