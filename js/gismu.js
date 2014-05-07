@@ -1,4 +1,28 @@
 
+
+// google.load("jquery", "1.3.1");
+
+// menu
+$(document).ready(function(){
+
+    $("#Filter").hide();
+
+    $("#Card_menu,#Filter_menu").click(function(e) {
+	e.preventDefault();
+	
+	$("#menu ul li a").each(function() {
+	    $(this).removeClass("active");	
+	});
+	
+	$(this).addClass("active");
+	
+	$("#Card").toggle();
+	$("#Filter").toggle();
+    });
+
+});
+
+
 var gismu=[ ];
 var entries=[ ];
 
@@ -102,3 +126,12 @@ function nextGismu() {
   updateGismu();
 }
 
+function filterGismu() {
+  var filter=$("#filter_input").val();
+  var entry_list = [];
+  for (e in entries) {
+      if (entries[e].match(filter)) { entry_list.push(entries[e]); }
+  }
+  // temp to look at result
+  $("#filter_list").text(entry_list.join(", "));
+}

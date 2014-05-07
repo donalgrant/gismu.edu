@@ -2,8 +2,11 @@
 <html>
 <head>
 
+<link rel="stylesheet" type="text/css" href="css/menu.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="css/grid.css" media="screen"/>
-<script src="js/gismu.js"></script>
+
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/gismu.js"></script>
 
 <script>
 window.scrollTo(0,1);
@@ -13,33 +16,69 @@ window.scrollTo(0,1);
 
 <body>
 
-<div id="content" style="position:absolute; align:center">
-
-  <div id="nav" style="height:5em; position:relative; align:center">
+<div id="wrapper">
+  <div id="content">
     
-    <div id="nav_button" style="display:table-cell; vertical-align:middle">
-      <button type="button" onclick="prevGismu()">Prev</button>
-    </div>
+    <div id="menu">
+      <ul>
+	<li><a id="Card_menu" href="#" title="Card" class="active">Card</a></li>
+	<li><a id="Filter_menu" href="#" title="Filter">Filter</a></li>
+      </ul>
+    </div> <!-- menu -->
     
-    <div id="gismu_entry" style="display:table-cell; vertical-align:middle">
-      <input id="gismu_label" type="text" onchange="newGismu()"></input>
-    </div>
+    <div id="Card">
+
+             <!-- <div id="content" style="position:absolute; align:center">  -->
+
+      <div id="nav" style="height:5em; position:relative; align:center">
+
+        <div id="nav_button" style="display:table-cell; vertical-align:middle">
+          <button type="button" onclick="prevGismu()">Prev</button>
+        </div>
+        <div id="gismu_entry" style="display:table-cell; vertical-align:middle">
+          <input id="gismu_label" type="text" onchange="newGismu()"></input>
+        </div>
+        <div id="nav_button" style="display:table-cell; vertical-align:middle">
+          <button type="button" onclick="nextGismu()">Next</button>
+        </div>
+
+      </div> <!-- nav -->
+
+      <div id="lower" style="height:5em; position:relative; align:center">
+        <div id="gloss_label" style="display:table-cell; vertical-align:middle"></div>
+        <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
+      </div>
+      <div id="def_label"></div>
+      <div id="xref_label"> </div>
+      <div id="notes_label"></div>
+
+    </div>  <!-- Card -->
+
+    <div id="Filter">
+
+      <div id="filter_group" style="height:5em; position:relative; align:center">
+
+        <div id="filter" style="display:table-cell; vertical-align:middle">
+          <input id="filter_input" type="text" onchange="filterGismu()"></input>
+        </div>
+        <div id="filter_radio" style="display:table-cell; vertical-align:middle">
+	  <input type="RADIO" name="r_set" value="regex" checked="checked">regex<br>
+	  <input type="RADIO" name="r_set" value="ordered">letters in order<br>
+	  <input type="RADIO" name="r_set" value="set">any order
+        </div>
+
+      </div> <!-- filter_group -->
+
+      <div id="list_label">
+
+	<p id="filter_list"></p>
+
+      </div>
+
+    </div>  <!-- Filter -->
     
-    <div id="nav_button" style="display:table-cell; vertical-align:middle">
-      <button type="button" onclick="nextGismu()">Next</button>
-    </div>
-
-  </div>
-
-  <div id="lower" style="height:5em; position:relative; align:center">
-    <div id="gloss_label" style="display:table-cell; vertical-align:middle"></div>
-    <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
-  </div>
-  <div id="def_label"></div>
-  <div id="xref_label"> </div>
-  <div id="notes_label"></div>
-
-</div>
+  </div> <!-- content -->
+</div> <!-- wrapper -->
 
 <script>
 initGismu();
