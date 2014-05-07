@@ -22,49 +22,66 @@ $(document).ready(function(){
 
 });
 
+function showCard() {
+    $("#Card_menu").addClass("active");
+    $("#Filter_menu").removeClass("active");
+    $("#Filter").hide();
+    $("#Card").show();
+}
 
 var gismu=[ ];
 var entries=[ ];
 
 function fixedGismu() {
 // use this when we aren't on a web-server, and so can't read in an XML file
-
-  entries = [ 'klama', 'gismu', 'kajdi' ];
-  fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'notes' ];
-  for (var e in entries) {
-    for (var l in fields) {
-      var g=entries[e]+'.'+fields[l];
-      gismu[g] = entries[e]+' entry for '+fields[l];
-    }
-    gismu[entries[e]+'.entry_num']=e;
-    gismu[entries[e]+'.xref']='klama, kajdi';
-  }
+    entries = [ 'klama', 'gismu', 'kajdi' ];
+    fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'notes' ];
+    for (var e in entries) {
+	for (var l in fields) {
+	    var g=entries[e]+'.'+fields[l];
+	    gismu[g] = entries[e]+' entry for '+fields[l];
+	}
+	gismu[entries[e]+'.entry_num']=e;
+	gismu[entries[e]+'.xref']='klama, kajdi';
+    } 
 }
 
 function initGismu() {
-  xmlhttp=new XMLHttpRequest();
-  xmlhttp.open("GET","gismu.xml",false);
-  xmlhttp.send();
-  xmlDoc=xmlhttp.responseXML; 
-  var x=xmlDoc.getElementsByTagName("item");
 
-  gismu = [ ];
-  entries=[ ];
-  
-  for (var i=0; i<x.length; i++) {
-  
-    var e=x[i].getElementsByTagName("gismu")[0].childNodes[0].nodeValue;
-    entries.push(e);
-    var fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'xref', 'notes' ];
-    for (var l in fields) {
-      var g=e+'.'+fields[l];
-      console.log(g);
-      gismu[g] = x[i].getElementsByTagName(fields[l])[0].childNodes[0].nodeValue;
-      console.log(gismu);
+    xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET","gismu.xml",false);
+
+    try {
+
+	xmlhttp.send();
+
+	xmlDoc=xmlhttp.responseXML;
+
+	var x=xmlDoc.getElementsByTagName("item");
+	
+	gismu = [ ];
+	entries=[ ];
+	
+	for (var i=0; i<x.length; i++) {
+	    
+	    var e=x[i].getElementsByTagName("gismu")[0].childNodes[0].nodeValue;
+	    entries.push(e);
+	    var fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'xref', 'notes' ];
+	    for (var l in fields) {
+		var g=e+'.'+fields[l];
+		console.log(g);
+		gismu[g] = x[i].getElementsByTagName(fields[l])[0].childNodes[0].nodeValue;
+		console.log(gismu);
+	    }
+	    gismu[e+'.entry_num']=i;
+	    
+	}
+		
     }
-    gismu[e+'.entry_num']=i;
-  
-  }
+    catch( e ) {
+	fixedGismu();
+	alert("Can't read XML; using hard-coded subset");
+    }
 
 }
 
@@ -100,11 +117,11 @@ function updateGismu() {
     var gs=xref_subs[s]; console.log(gs); console.log(gismu);
     if (gismu.hasOwnProperty(gs+'.gismu')) {
       console.log('found match');
-      html += '<a onclick="current_i='
+      html += '<b class="gismu_list_gismu"><a onclick="current_i='
               +gismu[gs+'.entry_num']
               +';updateGismu();return false;">'
-              + gs + '</a>'
-              + ' (' + gismu[gs+'.gloss'] + ')<br> ';
+              + gs + '</a></b>'
+              + ' - ' + gismu[gs+'.gloss'] + '<br> ';
     } else {
       console.log(gs+' was not a match');
 //      html += gs + ' ';
@@ -129,9 +146,21 @@ function nextGismu() {
 function filterGismu() {
   var filter=$("#filter_input").val();
   var entry_list = [];
+  var gi_list = [];
   for (e in entries) {
-      if (entries[e].match(filter)) { entry_list.push(entries[e]); }
+      if (entries[e].match(filter)) { 
+	  entry_list.push(entries[e]); 
+	  gi_list.push(e);
+      }
   }
   // temp to look at result
-  $("#filter_list").text(entry_list.join(", "));
+  var html="";
+  for (e in entry_list) {
+      html += '<b class="gismu_list_gismu"><a onclick="current_i='
+              + gismu[entry_list[e]+'.entry_num']
+              +';updateGismu();showCard();return false;">'
+              + entry_list[e] + '</a></b>'
+              + ' - ' + gismu[entry_list[e]+'.gloss'] + '<br> ';
+  }
+  $("#filter_list").html(html);
 }

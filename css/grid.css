@@ -51,7 +51,7 @@ width: 40%;
 float: right;
 }
 
-#xref_label {
+#xref_label, #list_label {
 column-count:2;
 -moz-column-count:2; /* Firefox */
 -webkit-column-count:2; /* Safari and Chrome */
@@ -61,6 +61,10 @@ column-count:2;
 font-size: 1.5em;
 width: 45%;
 float: left;
+}
+
+.gismu_list_gismu {
+font-family:"courier",Monospace,serif;
 }
 
 #spacer {
