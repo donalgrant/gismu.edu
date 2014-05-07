@@ -20,6 +20,12 @@ $(document).ready(function(){
 	$("#Filter").toggle();
     });
 
+    $("input[name=rfinterp]:radio").click(function() {	    
+	if ($("input[name=rfinterp]:radio:checked").val().match('bag')) {
+	    $("input[name=f_tie_begin]:checkbox").removeAttr('checked');
+	    $("input[name=f_tie_end]:checkbox"  ).removeAttr('checked');
+	}
+    });
 });
 
 function showCard() {
@@ -143,8 +149,40 @@ function nextGismu() {
   updateGismu();
 }
 
+function filterRegex() {
+
+  var filter_option=$("input:radio[name='rfinterp']:checked").val();
+  var filter_entry=$("#filter_input").val().toLowerCase();
+  var letters=filter_entry.replace(/[^abcdefgijklmnoprstuvxz']/g,"").split('');  // delete all non-gismu content
+
+  var filter;
+  switch (filter_option) {
+      case "one":
+        filter='['+letters.join('')+']';
+        break;
+      case "bag":
+        letters.sort();
+        filter='(?=.*'+letters.join(')(?=.*')+')';
+        filter=filter.replace(/(\w).*?\1/,"$1.*$1");
+        break;
+      case "list":
+        filter=letters.join(".*");
+        break;
+      case "cluster":
+        filter=letters.join("");
+        break;
+      default:
+        filter=filter_entry;
+  }   
+  if ($("input:checkbox[name='f_tie_begin']:checked").val()) { filter='^'+filter; }
+  if ($("input:checkbox[name='f_tie_end']:checked"  ).val()) { filter=filter+'$'; }
+  return filter;
+}
+
 function filterGismu() {
-  var filter=$("#filter_input").val();
+
+  var filter=filterRegex();
+// alert(filter);
   var entry_list = [];
   var gi_list = [];
   for (e in entries) {
@@ -154,7 +192,8 @@ function filterGismu() {
       }
   }
   // temp to look at result
-  var html="";
+  var html='<div class="label_title">'+entry_list.length+' matches found:</div>';
+
   for (e in entry_list) {
       html += '<b class="gismu_list_gismu"><a onclick="current_i='
               + gismu[entry_list[e]+'.entry_num']

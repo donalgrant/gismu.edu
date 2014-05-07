@@ -2,6 +2,10 @@
 <html>
 <head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=1.6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
 <link rel="stylesheet" type="text/css" href="css/menu.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="css/grid.css" media="screen"/>
 
@@ -62,9 +66,15 @@ window.scrollTo(0,1);
           <input id="filter_input" type="text" onchange="filterGismu()"></input>
         </div>
         <div id="filter_radio" style="display:table-cell; vertical-align:middle">
-	  <input type="RADIO" name="r_set" value="regex" checked="checked">regex<br>
-	  <input type="RADIO" name="r_set" value="ordered">letters in order<br>
-	  <input type="RADIO" name="r_set" value="set">any order
+	  <input type="radio" name="rfinterp" value="one"     onchange="filterGismu()" >match one or more<br>
+	  <input type="radio" name="rfinterp" value="bag"     onchange="filterGismu()" >match any order<br>
+	  <input type="radio" name="rfinterp" value="list"    onchange="filterGismu()" >match in order<br>
+	  <input type="radio" name="rfinterp" value="cluster" onchange="filterGismu()" checked="checked">match exact<br>
+	  <input type="radio" name="rfinterp" value="regex"   onchange="filterGismu()" >match regex
+        </div>
+        <div id="filter_check" style="display:table-cell; vertical-align:middle">
+	  <input type="checkbox" name="f_tie_begin" onchange="filterGismu()" >match begin<br>
+	  <input type="checkbox" name="f_tie_end"   onchange="filterGismu()" >match end
         </div>
 
       </div> <!-- filter_group -->
