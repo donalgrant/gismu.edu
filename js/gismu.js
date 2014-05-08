@@ -38,6 +38,10 @@ function showCard() {
 var gismu=[ ];
 var entries=[ ];
 
+/*  Neither of the following functions are needed, now that we
+    have the data embedded in a js script, rather than being 
+    read from an XML file.
+
 function fixedGismu() {
 // use this when we aren't on a web-server, and so can't read in an XML file
     entries = [ 'klama', 'gismu', 'kajdi' ];
@@ -91,6 +95,8 @@ function initGismu() {
 
 }
 
+*/
+
 var current_i;
 
 function newGismu() {
@@ -118,20 +124,23 @@ function updateGismu() {
   document.getElementById('gismu_label').value=gismu[e+'.gismu'];
   var xref = gismu[ e+'.xref' ];
   var html='<div class="label_title">Related:</div>';
-  var xref_subs=xref.split(" ");
-  for (s in xref_subs) {
-    var gs=xref_subs[s]; console.log(gs); console.log(gismu);
-    if (gismu.hasOwnProperty(gs+'.gismu')) {
-      console.log('found match');
-      html += '<b class="gismu_list_gismu"><a onclick="current_i='
-              +gismu[gs+'.entry_num']
-              +';updateGismu();return false;">'
-              + gs + '</a></b>'
-              + ' - ' + gismu[gs+'.gloss'] + '<br> ';
-    } else {
-      console.log(gs+' was not a match');
-//      html += gs + ' ';
-    }
+    console.log(gismu); console.log(xref);
+  if (xref.length>0) {
+      var xref_subs=xref.split(" ");
+      for (s in xref_subs) {
+	  var gs=xref_subs[s]; console.log(gs); console.log(gismu);
+	  if (gismu.hasOwnProperty(gs+'.gismu')) {
+	      console.log('found match');
+	      html += '<b class="gismu_list_gismu"><a onclick="current_i='
+		  +gismu[gs+'.entry_num']
+		  +';updateGismu();return false;">'
+		  + gs + '</a></b>'
+		  + ' - ' + gismu[gs+'.gloss'] + '<br> ';
+	  } else {
+	      console.log(gs+' was not a match');
+	      //      html += gs + ' ';
+	  }
+      }
   }
   console.log(html);
   document.getElementById('xref_label').innerHTML=html;
