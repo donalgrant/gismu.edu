@@ -95,13 +95,20 @@ function updateGismu() {
 }
 
 var gismuTimer;
+var timerSet=0;
 
 function playGismu() {
-    gismuTimer=setInterval("nextGismu()",600);
+    if (timerSet==0) {
+	gismuTimer=setInterval("nextGismu()",600);
+	timerSet=1;
+    }
 }
 
 function stopGismu() {
-    clearInterval(gismuTimer);
+    if (timerSet==1) {
+	clearInterval(gismuTimer);
+	timerSet=0;
+    }
 }
 
 function prevGismu() {
