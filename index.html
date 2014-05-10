@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=1.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=0.25, maximum-scale=1.6" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
@@ -31,62 +31,62 @@ window.scrollTo(0,1);
       </ul>
     </div> <!-- menu -->
     
-    <div id="Card">
+    <article id="Card">
 
              <!-- <div id="content" style="position:absolute; align:center">  -->
 
-      <div id="nav" style="height:5em; position:relative; align:center">
+      <div id="nav">
 
-        <div id="nav_button" style="display:table-cell; vertical-align:middle">
-          <button type="button" onclick="prevGismu()">Prev</button>
-        </div>
-        <div id="gismu_entry" style="display:table-cell; vertical-align:middle">
           <input id="gismu_label" type="text" onchange="newGismu()"></input>
-        </div>
-        <div id="nav_button" style="display:table-cell; vertical-align:middle">
-          <button type="button" onclick="nextGismu()">Next</button>
-        </div>
-
+	<div id="player" style="float:right">
+          <button type="button" onclick="current_i=0; updateGismu()"><img src="imgs/rewind.jpg"></button>
+          <button type="button" onclick="prevGismu()"><img src="imgs/backward.jpg"></button>
+          <button type="button" onclick="stopGismu()"><img src="imgs/pause.jpg"></button>
+          <button type="button" onclick="playGismu()"><img src="imgs/play.jpg"></button>
+          <button type="button" onclick="nextGismu()"><img src="imgs/forward.jpg"></button>
+	</div>
+	
       </div> <!-- nav -->
 
       <div id="lower" style="height:5em; position:relative; align:center">
         <div id="gloss_label" style="display:table-cell; vertical-align:middle"></div>
         <div id="rafsi_label" style="display:table-cell; vertical-align:middle"></div>
       </div>
-      <div id="def_label">   </div>
-      <div id="xref_label">  </div>
-      <div id="notes_label"> </div>
+      <div id="def_label">     </div>
+      <aside id="xref_label">  </aside>
+      <aside id="notes_label"> </aside>
 
-    </div>  <!-- Card -->
+    </article>  <!-- Card -->
 
-    <div id="Filter">
+    <article id="Filter">
 
-      <div id="filter_group" style="height:5em; position:relative; align:center">
-
-        <div id="filter" style="display:table-cell; vertical-align:middle">
-          <input id="filter_input" type="text" onchange="filterGismu()"></input>
-        </div>
+      <div id="filter" style="display:table-cell; vertical-align:middle">
+        <input id="filter_input" type="text" onchange="filterGismu()" placeholder="Match text or regex"></input>
+      </div>
+	
+      <div id="filter_group">
         <div id="filter_radio" style="display:table-cell; vertical-align:middle">
-	  <input type="radio" name="rfinterp" value="one"     onchange="filterGismu()" >match one or more<br>
-	  <input type="radio" name="rfinterp" value="bag"     onchange="filterGismu()" >match any order<br>
-	  <input type="radio" name="rfinterp" value="list"    onchange="filterGismu()" >match in order<br>
-	  <input type="radio" name="rfinterp" value="cluster" onchange="filterGismu()" checked="checked">match exact<br>
-	  <input type="radio" name="rfinterp" value="regex"   onchange="filterGismu()" >match regex
+	  <input type="radio" name="rfinterp" value="one"     onchange="filterGismu()" ><span class="sel">match one or more</span><br>
+	  <input type="radio" name="rfinterp" value="bag"     onchange="filterGismu()" ><span class="sel">match any order</span><br>
+	  <input type="radio" name="rfinterp" value="list"    onchange="filterGismu()" ><span class="sel">match in order</span><br>
+	  <input type="radio" name="rfinterp" value="cluster" onchange="filterGismu()"
+                                                                      checked="checked"><span class="sel">match exact</span><br>
+	  <input type="radio" name="rfinterp" value="regex"   onchange="filterGismu()" ><span class="sel">match regex</span><br>
         </div>
         <div id="filter_check" style="display:table-cell; vertical-align:middle">
-	  <input type="checkbox" name="f_tie_begin" onchange="filterGismu()" >match begin<br>
-	  <input type="checkbox" name="f_tie_end"   onchange="filterGismu()" >match end
+	  <input type="checkbox" name="f_tie_begin" onchange="filterGismu()" ><span class="sel">match begin</span><br>
+	  <input type="checkbox" name="f_tie_end"   onchange="filterGismu()" ><span class="sel">match end</span><br>
         </div>
 
       </div> <!-- filter_group -->
 
-      <div id="list_label">
+      <aside id="list_label">
 
 	<p id="filter_list"></p>
 
-      </div>
+      </aside>
 
-    </div>  <!-- Filter -->
+    </article>  <!-- Filter -->
     
   </div> <!-- content -->
 </div> <!-- wrapper -->

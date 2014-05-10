@@ -1,8 +1,5 @@
 
 
-// google.load("jquery", "1.3.1");
-
-// menu
 $(document).ready(function(){
 
     $("#Filter").hide();
@@ -20,6 +17,10 @@ $(document).ready(function(){
 	$("#Filter").toggle();
     });
 
+    setColumns();
+
+    $(window).resize(function() { setColumns(); });
+
     $("input[name=rfinterp]:radio").click(function() {	    
 	if ($("input[name=rfinterp]:radio:checked").val().match('bag')) {
 	    $("input[name=f_tie_begin]:checkbox").removeAttr('checked');
@@ -27,6 +28,12 @@ $(document).ready(function(){
 	}
     });
 });
+
+function setColumns() {
+    var ncol=Math.floor($(document).width()/300);
+    $("#list_label").css("column-count",ncol);
+    $("#xref_label").css("column-count",ncol);
+}
 
 function showCard() {
     $("#Card_menu").addClass("active");
@@ -37,65 +44,6 @@ function showCard() {
 
 var gismu=[ ];
 var entries=[ ];
-
-/*  Neither of the following functions are needed, now that we
-    have the data embedded in a js script, rather than being 
-    read from an XML file.
-
-function fixedGismu() {
-// use this when we aren't on a web-server, and so can't read in an XML file
-    entries = [ 'klama', 'gismu', 'kajdi' ];
-    fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'notes' ];
-    for (var e in entries) {
-	for (var l in fields) {
-	    var g=entries[e]+'.'+fields[l];
-	    gismu[g] = entries[e]+' entry for '+fields[l];
-	}
-	gismu[entries[e]+'.entry_num']=e;
-	gismu[entries[e]+'.xref']='klama, kajdi';
-    } 
-}
-
-function initGismu() {
-
-    xmlhttp=new XMLHttpRequest();
-    xmlhttp.open("GET","gismu.xml",false);
-
-    try {
-
-	xmlhttp.send();
-
-	xmlDoc=xmlhttp.responseXML;
-
-	var x=xmlDoc.getElementsByTagName("item");
-	
-	gismu = [ ];
-	entries=[ ];
-	
-	for (var i=0; i<x.length; i++) {
-	    
-	    var e=x[i].getElementsByTagName("gismu")[0].childNodes[0].nodeValue;
-	    entries.push(e);
-	    var fields = [ 'gismu', 'rafsi', 'gloss', 'def', 'xref', 'notes' ];
-	    for (var l in fields) {
-		var g=e+'.'+fields[l];
-		console.log(g);
-		gismu[g] = x[i].getElementsByTagName(fields[l])[0].childNodes[0].nodeValue;
-		console.log(gismu);
-	    }
-	    gismu[e+'.entry_num']=i;
-	    
-	}
-		
-    }
-    catch( e ) {
-	fixedGismu();
-	alert("Can't read XML; using hard-coded subset");
-    }
-
-}
-
-*/
 
 var current_i;
 
@@ -118,7 +66,7 @@ function updateGismu() {
 
   document.getElementById('rafsi_label').innerHTML='<div class="label_title">rafsi:</div>'        +gismu[e+'.rafsi'];
   document.getElementById('gloss_label').innerHTML='<div class="label_title">English Gloss:</div>'+gismu[e+'.gloss'];
-  document.getElementById('def_label'  ).innerHTML='<div class="label_title">Full Def:</div>'     +gismu[e+'.def'];
+  document.getElementById('def_label'  ).innerHTML='<div class="label_title">Full Def:</div>'     +gismu[e+'.full_def'];
   document.getElementById('notes_label').innerHTML='<div class="label_title">Notes:</div>'        +gismu[e+'.notes'];
 
   document.getElementById('gismu_label').value=gismu[e+'.gismu'];
@@ -144,6 +92,16 @@ function updateGismu() {
   }
   console.log(html);
   document.getElementById('xref_label').innerHTML=html;
+}
+
+var gismuTimer;
+
+function playGismu() {
+    gismuTimer=setInterval("nextGismu()",600);
+}
+
+function stopGismu() {
+    clearInterval(gismuTimer);
 }
 
 function prevGismu() {

@@ -4,48 +4,64 @@ margin: 0.1em;
 }
 
 #content {
-/*
-border:solid 1px #57977b;
-*/
-/* max-width:  320px; */
+font-size:  1em;
+padding:  0.2em;
+margin:  0.2em;
 }
 
 button {
+/*
 border:solid 1px #57977b;
 -moz-border-radius: 2px;
 -webkit-border-radius: 2px;
 border-radius: 2px;
-font-size:  0.8em;
-width: 3em;
+font-size:  2em;
+width:  1.6em;
+height:  1.6em;
+*/
+/* width: 3em; */
 }
 
 textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, #gismu_label, #notes_label {
-border:solid 1px #5797ab;
+/* border:solid 1px #5797ab; 
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
 border-radius: 3px;
-background-color:#b0c4de;
+background-color:#b0c4de; */
 color: #ffffff;
-padding: 2pt;
+padding: 0.2em;
+margin:  0.2em;
 }
 
 #nav, #lower {
 width:  100%;
 }
 
-#gismu_label {
-font-size:  2em;
-margin: 0.2em 0.2em 1em 1em;
-width: 70%;
+.sel {
+font-size:  1.3em;
+}
+
+#player {
+margin: 1em 1em 0em 0em;
+}
+
+#gismu_label, #filter_input {
+font-size:  2.2em;
+width: 30%;
+color: #050505;
+}
+
+#filter_input {
+width: 90%;
 }
 
 #def_label, #notes_label, #xref_label {
-font-size:  1.2em;
+font-size:  1.5em;
 width: 100%;
 }
 
 #rafsi_label {
-font-size: 1.5em;
+font-size: 2em;
 height: 2.5em;
 width: 40%;
 float: right;
@@ -58,13 +74,18 @@ column-count:2;
 }
 
 #gloss_label {
-font-size: 1.5em;
+font-size: 1.8em;
 width: 45%;
 float: left;
 }
 
 .gismu_list_gismu {
 font-family:"courier",Monospace,serif;
+font-size: 1.3em;
+}
+
+#filter_list {
+font-size: 1.2em;
 }
 
 #spacer {
@@ -72,5 +93,6 @@ height: 0.5em;
 }
 
 .label_title {
-font-size: 0.7em;
+font-size: 0.8em;
 }
+
