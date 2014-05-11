@@ -30,7 +30,7 @@ window.scrollTo(0,1);
 	<li><a id="Card_menu"   href="#" title="Card"  class="active">gismu</a></li>
 	<li><a id="Filter_menu" href="#" title="Filter">liste</a></li>
 	<li><a id="Rafsi_menu"  href="#" title="Rafsi" >rafsi</a></li>
-	<li><a id="Quiz_menu"   href="#" title="Quiz"  >cipru</a></li>
+	<li><a id="Quiz_menu"   href="#" title="Quiz"  >cipra</a></li>
       </ul>
     </div> <!-- menu -->
     
@@ -105,7 +105,19 @@ window.scrollTo(0,1);
     </article>  <!-- rafsi -->
       
     <article id="Quiz">
-      <p>This tab not yet available</p>
+
+      <div id="quiz_item">
+	<p id="quiz_text">This tab not yet available</p>
+      </div>
+      
+      <div id="nav">
+          <input id="quiz_input" type="text" onchange="quizUpdate()"></input>
+      </div> <!-- nav -->
+      
+      <div id="quiz_result">
+	<p id="quiz_result_text"></p>
+      </div>
+
     </article>  <!-- Quiz -->
       
   </div> <!-- content -->

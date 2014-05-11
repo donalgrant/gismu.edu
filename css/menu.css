@@ -22,9 +22,9 @@ a { outline:none; }
 
 /* MENU */
 #menu { margin:40px 0 0 150px; }
-#menu { margin:15px 0 0 10px; }
+#menu { margin:15px 0 0 20px; }
 #menu ul { list-style:none; }
-#menu ul li { display:inline; float:left; margin-bottom:10px; }
+#menu ul li { display:inline; float:left; margin-bottom:20px; }
 
 /* :first-child pseudo selector with rounded top left corner */
 #menu ul li:first-child a { -moz-border-radius-topleft: 12px; -webkit-border-top-left-radius:12px; }
@@ -34,7 +34,7 @@ a { outline:none; }
 
 /* background color set to RGBA, with opacity on 0.3 and also using text-shadow */
 #menu ul li a { 
-    padding:10px; 
+    padding:20px; 
     background: rgba(255,138,30,0.3); 
     text-decoration: none; 
     font: bold 1em Helvetica, Sans-Serif; 

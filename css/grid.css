@@ -13,7 +13,8 @@ button.icon {
 width:35px;
 }
 
-textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, #gismu_label, #notes_label {
+textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, 
+  #gismu_label, #notes_label, #quiz_text, #quiz_result_text {
 /* border:solid 1px #5797ab; 
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
@@ -24,7 +25,7 @@ padding: 0.2em;
 margin:  0.2em;
 }
 
-#nav, #lower {
+#nav, #lower, #quiz_item {
 width:  100%;
 }
 
@@ -36,7 +37,7 @@ font-size:  1.3em;
 margin: 1em 1em 0em 0em;
 }
 
-#gismu_label, #filter_input {
+#gismu_label, #filter_input, #rafsi_input, #quiz_input {
 font-size:  2.2em;
 width: 30%;
 color: #050505;
