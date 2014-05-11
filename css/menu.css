@@ -62,4 +62,5 @@ a { outline:none; }
 /* header with a text-shadow */
 #main h3 { text-transform:uppercase; padding:20px 0 0 20px; color:#eee; text-shadow: #000 0px 0px 2px; }
 #Card p { padding-bottom:20px; color:#ddd; }
+#Rafsi p { padding-bottom:20px; color:#ddd; }
 #Filter p { padding-bottom:20px; color:#ddd; }

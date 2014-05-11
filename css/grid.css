@@ -9,17 +9,8 @@ padding:  0.2em;
 margin:  0.2em;
 }
 
-button {
-/*
-border:solid 1px #57977b;
--moz-border-radius: 2px;
--webkit-border-radius: 2px;
-border-radius: 2px;
-font-size:  2em;
-width:  1.6em;
-height:  1.6em;
-*/
-/* width: 3em; */
+button.icon {
+width:35px;
 }
 
 textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, #gismu_label, #notes_label {

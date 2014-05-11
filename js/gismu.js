@@ -2,9 +2,10 @@
 
 $(document).ready(function(){
 
-    $("#Filter").hide();
+    $("#Card,#Rafsi,#Filter,#Quiz").hide();
+    $("#Card").show();
 
-    $("#Card_menu,#Filter_menu").click(function(e) {
+    $("#Card_menu").click(function(e) {
 	e.preventDefault();
 	
 	$("#menu ul li a").each(function() {
@@ -13,8 +14,44 @@ $(document).ready(function(){
 	
 	$(this).addClass("active");
 	
-	$("#Card").toggle();
-	$("#Filter").toggle();
+	$("#Card,#Rafsi,#Filter,#Quiz").hide();
+	$("#Card").show();
+    });
+    $("#Rafsi_menu").click(function(e) {
+	e.preventDefault();
+	
+	$("#menu ul li a").each(function() {
+	    $(this).removeClass("active");	
+	});
+	
+	$(this).addClass("active");
+	
+	$("#Card,#Rafsi,#Filter,#Quiz").hide();
+	$("#Rafsi").show();
+    });
+    $("#Filter_menu").click(function(e) {
+	e.preventDefault();
+	
+	$("#menu ul li a").each(function() {
+	    $(this).removeClass("active");	
+	});
+	
+	$(this).addClass("active");
+	
+	$("#Card,#Rafsi,#Filter,#Quiz").hide();
+	$("#Filter").show();
+    });
+    $("#Quiz_menu").click(function(e) {
+	e.preventDefault();
+	
+	$("#menu ul li a").each(function() {
+	    $(this).removeClass("active");	
+	});
+	
+	$(this).addClass("active");
+	
+	$("#Card,#Rafsi,#Filter,#Quiz").hide();
+	$("#Quiz").show();
     });
 
     setColumns();
@@ -27,10 +64,19 @@ $(document).ready(function(){
 	    $("input[name=f_tie_end]:checkbox"  ).removeAttr('checked');
 	}
     });
+
+    $("#Card").swipe( {
+	swipeLeft:function() { nextGismu() },
+	swipeRight:function() { prevGismu() },
+	allowPageScroll:"auto",
+	triggerOnTouchEnd:false,
+	triggerOnTouchLeave:true,
+	threshold:20
+    });
 });
 
 function setColumns() {
-    var ncol=Math.floor($(document).width()/300);
+    var ncol=Math.floor($(document).width()/250);
     $("#list_label").css("column-count",ncol);
     $("#xref_label").css("column-count",ncol);
 }
