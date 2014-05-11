@@ -15,11 +15,6 @@ ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input{margin
 body { /* background-image:url("../images/wood_bg.jpg"); */ font: 14px Georgia, serif; }
 a { outline:none; }
 
-/* COMMON CLASSES */
-.break { clear:both; }
-
-/* WRAPPER */
-/* #wrapper { width:360px; margin:20px auto; } */
 
 /* CONTENT */
 #content { }
@@ -27,8 +22,9 @@ a { outline:none; }
 
 /* MENU */
 #menu { margin:40px 0 0 150px; }
+#menu { margin:15px 0 0 10px; }
 #menu ul { list-style:none; }
-#menu ul li { display:inline; float:left; margin-bottom:20px; }
+#menu ul li { display:inline; float:left; margin-bottom:10px; }
 
 /* :first-child pseudo selector with rounded top left corner */
 #menu ul li:first-child a { -moz-border-radius-topleft: 12px; -webkit-border-top-left-radius:12px; }
@@ -37,30 +33,37 @@ a { outline:none; }
 #menu ul li:last-child a { -moz-border-radius-topright: 12px; -webkit-border-top-right-radius:12px; }
 
 /* background color set to RGBA, with opacity on 0.3 and also using text-shadow */
-#menu ul li a { padding:20px; background: rgba(255,138,30,0.3); text-decoration: none; font: bold 1em Helvetica, Sans-Serif; letter-spacing: -1px; color: #402e16;
-	text-shadow: #eee 0px 0px 2px; }
+#menu ul li a { 
+    padding:10px; 
+    background: rgba(255,138,30,0.3); 
+    text-decoration: none; 
+    font: bold 1em Helvetica, Sans-Serif; 
+    letter-spacing: -1px; color: #402e16;
+    text-shadow: #eee 0px 0px 2px; 
+}
 	
 /* hover state shows a linear gradient and opacity it brought down to 0.9 and also shows a very slight grey gradient on top */
-#menu ul li a:hover { -moz-box-shadow: 0 -5px 10px #777; -webkit-box-shadow: 0 -5px 10px #777;
-	background: -webkit-gradient(
-		linear, right bottom, left top, color-stop(0, rgb(237,227,112)), color-stop(0.72, rgb(255,173,10))) !important;
-	background: -moz-linear-gradient(
-		right bottom, rgb(237,227,112) 0%, rgb(255,173,10) 72%) !important;
-	background-color:rgb(255,173,10) !important;
-	-moz-opacity:.90; filter:alpha(opacity=90); opacity:.90; }
+#menu ul li a:hover { 
+    -moz-box-shadow: 0 -5px 10px #777; 
+    -webkit-box-shadow: 0 -5px 10px #777;
+    background: -webkit-gradient(
+		linear, right bottom, left top, 
+		color-stop(0, rgb(237,227,112)), color-stop(0.72, rgb(255,173,10))) !important;
+    background: -moz-linear-gradient(
+			right bottom, rgb(237,227,112) 0%, rgb(255,173,10) 72%) !important;
+    background-color:rgb(255,173,10) !important;
+    -moz-opacity:.90; 
+    filter:alpha(opacity=90); 
+    opacity:.90; 
+}
 
 /* another RGBA background, now with an opacity of 0.8 */
 #menu ul li a.active { background: rgba(255,138,30,0.8) !important; }
 
 /* main contents with RGBA background (same colour as active tab) and three rounded corners */
-#Card, #Filter { 
+#Card, #Filter, #Rafsi, #Quiz { 
     clear:both; background: rgba(255,138,30,0.8); 
-/*    width:500px; margin-left:150px; */
     -moz-border-radius-topright: 12px; -moz-border-radius-bottomright: 12px; -moz-border-radius-bottomleft: 12px;
     -webkit-border-top-right-radius:12px; -webkit-border-bottom-right-radius:12px; -webkit-border-bottom-left-radius:12px;}
 	
-/* header with a text-shadow */
-#main h3 { text-transform:uppercase; padding:20px 0 0 20px; color:#eee; text-shadow: #000 0px 0px 2px; }
-#Card p { padding-bottom:20px; color:#ddd; }
-#Rafsi p { padding-bottom:20px; color:#ddd; }
-#Filter p { padding-bottom:20px; color:#ddd; }
+#Card p, #Rafsi p, #Filter p, #Quiz p { padding-bottom:20px; color:#ddd; }
