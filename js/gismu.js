@@ -1,58 +1,35 @@
 
 
+var gismu=[ ];
+var entries=[ ];
+
+var current_i;
+var quiz_list;
+var qi_current=0;
+
+var articles=[ 'Card', 'Rafsi', 'Filter', 'Quiz' ];
+function hideArticles() { for (i in articles) { $("#"+articles[i]).hide(); } }
+
 $(document).ready(function(){
 
-    $("#Card,#Rafsi,#Filter,#Quiz").hide();
-    $("#Card").show();
+    var createMenuClick = function(article) {
+	return function(e) {
+	    var menu=article+'_menu';
+	    e.preventDefault();
+	    $("#menu ul li a").each(function() {
+		$(this).removeClass("active"); 
+	    });
+	    $(menu).addClass("active"); 
+	    hideArticles();
+	    $(article).show(); 
+	};
+    };
 
-    $("#Card_menu").click(function(e) {
-	e.preventDefault();
-	
-	$("#menu ul li a").each(function() {
-	    $(this).removeClass("active");	
-	});
-	
-	$(this).addClass("active");
-	
-	$("#Card,#Rafsi,#Filter,#Quiz").hide();
-	$("#Card").show();
-    });
-    $("#Rafsi_menu").click(function(e) {
-	e.preventDefault();
-	
-	$("#menu ul li a").each(function() {
-	    $(this).removeClass("active");	
-	});
-	
-	$(this).addClass("active");
-	
-	$("#Card,#Rafsi,#Filter,#Quiz").hide();
-	$("#Rafsi").show();
-    });
-    $("#Filter_menu").click(function(e) {
-	e.preventDefault();
-	
-	$("#menu ul li a").each(function() {
-	    $(this).removeClass("active");	
-	});
-	
-	$(this).addClass("active");
-	
-	$("#Card,#Rafsi,#Filter,#Quiz").hide();
-	$("#Filter").show();
-    });
-    $("#Quiz_menu").click(function(e) {
-	e.preventDefault();
-	
-	$("#menu ul li a").each(function() {
-	    $(this).removeClass("active");	
-	});
-	
-	$(this).addClass("active");
-	
-	$("#Card,#Rafsi,#Filter,#Quiz").hide();
-	$("#Quiz").show();
-    });
+    for (i in articles) { 
+	var art ='#'+articles[i];
+	var art_menu='#'+articles[i]+'_menu';
+	$(art_menu).click(createMenuClick(art));
+    }
 
     setColumns();
 
@@ -73,6 +50,10 @@ $(document).ready(function(){
 	triggerOnTouchLeave:true,
 	threshold:20
     });
+
+    quiz_list=entries;
+    quizUpdate();
+    $("#Card_menu").click();
 });
 
 function setColumns() {
@@ -81,25 +62,13 @@ function setColumns() {
     $("#xref_label").css("column-count",ncol);
 }
 
-function showCard() {
-    $("#Card_menu").addClass("active");
-    $("#Filter_menu").removeClass("active");
-    $("#Filter").hide();
-    $("#Card").show();
-}
-
-var gismu=[ ];
-var entries=[ ];
-
-var current_i;
+function showCard() { $("#Card_menu").click(); }
 
 function newGismu() {
-  var gr=document.getElementById('gismu_label').value;
+  var gr=$("#gismu_label").val(); 
   for (e in entries) {
-    console.log(gr); console.log(e); console.log(entries[e]); console.log(entries[e].match(gr));
-    if (entries[e].match(gr)) {
+    if (entries[e].match(gr)) {  // better way than stepping through them -- search gismu, then use gismu.entry_num?
       current_i=e;
-      console.log('current_i set to '+current_i);
       updateGismu();
       return;
     }
@@ -110,43 +79,44 @@ function updateGismu() {
 
   var e = entries[current_i];
 
-  document.getElementById('rafsi_label').innerHTML='<div class="label_title">rafsi:</div>'        +gismu[e+'.rafsi'];
-  document.getElementById('gloss_label').innerHTML='<div class="label_title">English Gloss:</div>'+gismu[e+'.gloss'];
-  document.getElementById('def_label'  ).innerHTML='<div class="label_title">Full Def:</div>'     +gismu[e+'.full_def'];
-  document.getElementById('notes_label').innerHTML='<div class="label_title">Notes:</div>'        +gismu[e+'.notes'];
+  $('#rafsi_label').html('<div class="label_title">rafsi:</div>'        +gismu[e+'.rafsi']   );
+  $('#gloss_label').html('<div class="label_title">English Gloss:</div>'+gismu[e+'.gloss']   );
+  $('#def_label'  ).html('<div class="label_title">Full Def:</div>'     +gismu[e+'.full_def']);
+  $('#notes_label').html('<div class="label_title">Notes:</div>'        +gismu[e+'.notes']   );
 
-  document.getElementById('gismu_label').value=gismu[e+'.gismu'];
+  $('#gismu_label').val(gismu[e+'.gismu']);
+
   var xref = gismu[ e+'.xref' ];
   var html='<div class="label_title">Related:</div>';
-    console.log(gismu); console.log(xref);
+
   if (xref.length>0) {
       var xref_subs=xref.split(" ");
       for (s in xref_subs) {
-	  var gs=xref_subs[s]; console.log(gs); console.log(gismu);
+	  var gs=xref_subs[s];
 	  if (gismu.hasOwnProperty(gs+'.gismu')) {
-	      console.log('found match');
 	      html += '<b class="gismu_list_gismu"><a onclick="current_i='
 		  +gismu[gs+'.entry_num']
 		  +';updateGismu();return false;">'
 		  + gs + '</a></b>'
 		  + ' - ' + gismu[gs+'.gloss'] + '<br> ';
-	  } else {
-	      console.log(gs+' was not a match');
-	      //      html += gs + ' ';
-	  }
+	  } 
       }
   }
-  console.log(html);
-  document.getElementById('xref_label').innerHTML=html;
+  $('#xref_label').html(html);
 }
 
 var gismuTimer;
 var timerSet=0;
+var gismuInterval=1000;
 
 function playGismu() {
     if (timerSet==0) {
-	gismuTimer=setInterval("nextGismu()",600);
+	gismuTimer=setInterval("nextGismu()",1000);
 	timerSet=1;
+    } else {
+	clearInterval(gismuTimer);
+	gismuInterval/=2;
+	gismuTimer=setInterval("nextGismu()",gismuInterval);
     }
 }
 
@@ -154,6 +124,7 @@ function stopGismu() {
     if (timerSet==1) {
 	clearInterval(gismuTimer);
 	timerSet=0;
+	gismuInterval=1000;
     }
 }
 
@@ -199,27 +170,43 @@ function filterRegex() {
   return filter;
 }
 
+quizUpdate();
+
 function filterGismu() {
 
   var filter=filterRegex();
 // alert(filter);
-  var entry_list = [];
-  var gi_list = [];
+  quiz_list = [];
+  var qi_list = [];
   for (e in entries) {
       if (entries[e].match(filter)) { 
-	  entry_list.push(entries[e]); 
-	  gi_list.push(e);
+	  quiz_list.push(entries[e]); 
+	  qi_list.push(e);
       }
   }
   // temp to look at result
-  var html='<div class="label_title">'+entry_list.length+' matches found:</div>';
+  var html='<div class="label_title">'+quiz_list.length+' matches found:</div>';
 
-  for (e in entry_list) {
+  for (e in quiz_list) {
       html += '<b class="gismu_list_gismu"><a onclick="current_i='
-              + gismu[entry_list[e]+'.entry_num']
+              + gismu[quiz_list[e]+'.entry_num']
               +';updateGismu();showCard();return false;">'
-              + entry_list[e] + '</a></b>'
-              + ' - ' + gismu[entry_list[e]+'.gloss'] + '<br> ';
+              + quiz_list[e] + '</a></b>'
+              + ' - ' + gismu[quiz_list[e]+'.gloss'] + '<br> ';
   }
   $("#filter_list").html(html);
+  quizUpdate();
+}
+
+function quizUpdate() {
+    qi_current=Math.floor(Math.random()*quiz_list.length);
+    $("#quiz_text").html(gismu[quiz_list[qi_current]+'.full_def']);
+    $("#quiz_input").val('');
+}
+
+function quizCheck() {
+    var gismu_input=$("#quiz_input").val().toLowerCase();
+    if (gismu_input.match(quiz_list[qi_current])) { $("#quiz_result_text").html("Correct!!"); }
+    else                                            { $("#quiz_result_text").html("Wrong.  Answer is "+quiz_list[qi_current]); }
+    quizUpdate();
 }
