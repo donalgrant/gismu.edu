@@ -30,6 +30,7 @@ window.scrollTo(0,1);
 	<li><a id="Card_menu"   href="#" title="Card"  >gismu</a></li>
 	<li><a id="Filter_menu" href="#" title="Filter">liste</a></li>
 	<li><a id="Rafsi_menu"  href="#" title="Rafsi" >rafsi</a></li>
+	<li><a id="Glico_menu"   href="#" title="Glico">glico</a></li>
 	<li><a id="Quiz_menu"   href="#" title="Quiz"  >cipra</a></li>
       </ul>
     </div> <!-- menu -->
@@ -107,7 +108,7 @@ window.scrollTo(0,1);
     <article id="Quiz">
 
       <div id="quiz_item">
-	<p id="quiz_text">This tab not yet available</p>
+	<p id="quiz_text"></p>
       </div>
       
       <div id="nav">
@@ -120,13 +121,31 @@ window.scrollTo(0,1);
 
     </article>  <!-- Quiz -->
       
+      <article id="Glico">
+
+      <div id="glico" style="display:table-cell; vertical-align:middle">
+        <input id="glico_input" type="text" onchange="glicoFacki()" placeholder="English Match text|regex"></input>
+      </div>
+	
+      <div id="glico_group">
+        <div id="glico_check" style="display:table-cell; vertical-align:middle">
+      </div>
+
+      </div> <!-- glico_group -->
+      
+      <aside id="glico_label">
+
+	<p id="glico_list"></p>
+
+      </aside>
+
+    </article>  <!-- Glico -->
+      
   </div> <!-- content -->
 </div> <!-- wrapper -->
 
 <script>
-initGismu();
-current_i=0;
-updateGismu();
+// can this all go at the end of the "ready" function in gismu.js?
 
 </script>
 

@@ -4,10 +4,10 @@ var gismu=[ ];
 var entries=[ ];
 
 var current_i;
-var quiz_list;
+var quiz_list=[ ];
 var qi_current=0;
 
-var articles=[ 'Card', 'Rafsi', 'Filter', 'Quiz' ];
+var articles=[ 'Card', 'Rafsi', 'Filter', 'Quiz', 'Glico' ];
 function hideArticles() { for (i in articles) { $("#"+articles[i]).hide(); } }
 
 $(document).ready(function(){
@@ -51,15 +51,23 @@ $(document).ready(function(){
 	threshold:20
     });
 
+    $("#Card_menu").click();
+
+    initGismu();
+    current_i=0;
+    updateGismu();
     quiz_list=entries;
     quizUpdate();
-    $("#Card_menu").click();
+
 });
 
 function setColumns() {
     var ncol=Math.floor($(document).width()/250);
     $("#list_label").css("column-count",ncol);
     $("#xref_label").css("column-count",ncol);
+
+    ncol=Math.floor($(document).width()/400);
+    $("#glico_label").css("column-count",ncol);
 }
 
 function showCard() { $("#Card_menu").click(); }
@@ -93,13 +101,7 @@ function updateGismu() {
       var xref_subs=xref.split(" ");
       for (s in xref_subs) {
 	  var gs=xref_subs[s];
-	  if (gismu.hasOwnProperty(gs+'.gismu')) {
-	      html += '<b class="gismu_list_gismu"><a onclick="current_i='
-		  +gismu[gs+'.entry_num']
-		  +';updateGismu();return false;">'
-		  + gs + '</a></b>'
-		  + ' - ' + gismu[gs+'.gloss'] + '<br> ';
-	  } 
+	  if (gismu.hasOwnProperty(gs+'.gismu')) { html+=filterOutputItem(gs); }
       }
   }
   $('#xref_label').html(html);
@@ -172,6 +174,21 @@ function filterRegex() {
 
 quizUpdate();
 
+function filterOutputItem(item,use_def) {
+    var entry=gismu[item+'.entry_num'];
+    var gloss=gismu[item+'.gloss'];
+    var def  =gismu[item+'.full_def'];
+    var html='<div class="filter_output_item">';
+    html+='<span class="gismu_list_gismu">'
+	+'<a onclick="current_i=' + entry +';updateGismu();showCard();return false;">'
+        + item + '</a></span>' + '<div class="gloss_list_item">' + gloss + '</div> ';
+    if (use_def) {
+	html+='<div class="gismu_list_def">'+def+'</div>';
+    }
+    html+='</div>';
+    return html;
+}
+
 function filterGismu() {
 
   var filter=filterRegex();
@@ -187,13 +204,8 @@ function filterGismu() {
   // temp to look at result
   var html='<div class="label_title">'+quiz_list.length+' matches found:</div>';
 
-  for (e in quiz_list) {
-      html += '<b class="gismu_list_gismu"><a onclick="current_i='
-              + gismu[quiz_list[e]+'.entry_num']
-              +';updateGismu();showCard();return false;">'
-              + quiz_list[e] + '</a></b>'
-              + ' - ' + gismu[quiz_list[e]+'.gloss'] + '<br> ';
-  }
+  for (e in quiz_list) { html += filterOutputItem(quiz_list[e]); }
+
   $("#filter_list").html(html);
   quizUpdate();
 }
@@ -209,4 +221,22 @@ function quizCheck() {
     if (gismu_input.match(quiz_list[qi_current])) { $("#quiz_result_text").html("Correct!!"); }
     else                                            { $("#quiz_result_text").html("Wrong.  Answer is "+quiz_list[qi_current]); }
     quizUpdate();
+}
+
+function glicoFacki() {
+
+    var match_entry=$("#glico_input").val().toLowerCase();
+    var gl_list = [];
+    for (var e in entries) {
+	var full_def=gismu[entries[e]+'.full_def'];
+	var gloss   =gismu[entries[e]+'.gloss'];
+	if (full_def.match(match_entry))   { gl_list.push(entries[e]); }
+	else if (gloss.match(match_entry)) { gl_list.push(entries[e]); }
+    }
+
+    var html='<div class="label_title">'+gl_list.length+' matches found:</div>';
+    
+    for (var e in gl_list) { html+=filterOutputItem(gl_list[e],1); }
+
+    $("#glico_list").html(html);
 }

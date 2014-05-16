@@ -13,7 +13,7 @@ button.icon {
 width:35px;
 }
 
-textarea, input, #def_label, #rafsi_label, #gloss_label, #xref_label, 
+textarea, input, #def_label, #rafsi_label, #glico_label, #gloss_label, #xref_label, 
   #gismu_label, #notes_label, #quiz_text, #quiz_result_text {
 /* border:solid 1px #5797ab; 
 -moz-border-radius: 3px;
@@ -37,17 +37,20 @@ font-size:  1.3em;
 margin: 1em 1em 0em 0em;
 }
 
-#gismu_label, #filter_input, #rafsi_input, #quiz_input {
-font-size:  2.2em;
-width: 30%;
+#gismu_label, #filter_input, #rafsi_input, #quiz_input, #glico_input, #quiz_result {
+font-size:  2.0em;
 color: #050505;
 }
 
-#filter_input {
-width: 90%;
+#gismu_label, #rafsi_input, #quiz_input {
+width: 30%;
 }
 
-#def_label, #notes_label, #xref_label {
+#filter_input, #glico_input {
+width: 110%;
+}
+
+#def_label, #notes_label, #xref_label, #quiz_text {
 font-size:  1.5em;
 width: 100%;
 }
@@ -74,10 +77,18 @@ float: left;
 .gismu_list_gismu {
 font-family:"courier",Monospace,serif;
 font-size: 1.3em;
+font-weight: bold;
 }
 
-#filter_list {
+#filter_list, #glico_list {
 font-size: 1.2em;
+}
+
+.filter_output_item {
+}
+
+.gismu_list_def {
+margin-left: 4em;
 }
 
 #spacer {
@@ -86,5 +97,10 @@ height: 0.5em;
 
 .label_title {
 font-size: 0.8em;
+}
+
+.gloss_list_item {
+padding-left: 1em;
+display:  inline;
 }
 
