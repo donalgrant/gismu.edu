@@ -83,6 +83,11 @@ function newGismu() {
   }
 }
 
+function randomGismu() {
+    current_i=Math.floor(Math.random()*entries.length);
+    updateGismu();
+}
+
 function updateGismu() {
 
   var e = entries[current_i];
