@@ -51,7 +51,7 @@ my $outfields_select=join('|',@outfields);
 # $gismu_out=~s/["](.{4,5}\.($outfields_select))["]/$1/go;
 
 print "function initGismu() {\n";
-print "$entries_out\n";
+# print "$entries_out\n";
 print "$gismu_out\n";
 print "}\n";
 

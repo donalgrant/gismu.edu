@@ -54,12 +54,27 @@ $(document).ready(function(){
     $("#Card_menu").click();
 
     initGismu();
+    selectGismu();
     current_i=0;
     updateGismu();
     quiz_list=entries;
     quizUpdate();
 
 });
+
+// select the gismu data to be used, and
+// initialize the entries
+function selectGismu() {
+    entries=[];
+    for (var p in gismu) {
+	if (p.match(/[.]gismu/)) { 
+	    if (gismu[p].match(/^.{5}$/)) {
+		entries.push(gismu[p]); 
+	    }
+	}
+    }
+    entries.sort();
+}
 
 function setColumns() {
     var ncol=Math.floor($(document).width()/250);
