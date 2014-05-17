@@ -73,7 +73,11 @@ function selectGismu() {
 	    }
 	}
     }
-    entries.sort();
+    entries.sort();  
+    // now assign cross-references
+    for (e in entries) {
+	gismu[entries[e]+'.entry_num']=e;
+    }
 }
 
 function setColumns() {

@@ -12,7 +12,7 @@ my $null='';
 my $pretty=0;
 
 my @infields=qw( gismu rafsi gloss gloss2 full_def notes );
-my @outfields=grep { !/gloss2/ } @infields,'xref','entry_num';
+my @outfields=grep { !/gloss2/ } @infields,'xref'; # ,'entry_num';
 
 while (<STDIN>) {
   # split based on commas, but watch out for quoted commas!
@@ -32,7 +32,7 @@ while (<STDIN>) {
   $gismu_item{xref}=~s/,//g;
   $gismu_item{notes} ||= '(none)';
   $gismu_item{gloss}.=" $gismu_item{gloss2}" unless $gismu_item{gloss2}=~/.none./;
-  $gismu_item{entry_num}=scalar(@entries);
+#  $gismu_item{entry_num}=scalar(@entries);
 
   push @entries,$gismu_item{gismu};
   $gismu{"$gismu_item{gismu}.$_"}=$gismu_item{$_} for (@outfields);
