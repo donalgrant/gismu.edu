@@ -2,6 +2,7 @@
 
 var gismu=[ ];
 var entries=[ ];
+var rafsi=[ ];
 
 var current_i;
 var quiz_list=[ ];
@@ -77,6 +78,9 @@ function selectGismu() {
     // now assign cross-references
     for (e in entries) {
 	gismu[entries[e]+'.entry_num']=e;
+	var r=gismu[entries[e]+'.rafsi'];
+	var ra=r.split(/\s+/);
+	for (ir in ra) { rafsi[ra[ir]]=entries[e]; }
     }
 }
 
@@ -201,12 +205,15 @@ quizUpdate();
 function filterOutputItem(item,use_def) {
     var entry=gismu[item+'.entry_num'];
     var gloss=gismu[item+'.gloss'];
+    var rafsi=gismu[item+'.rafsi'];
     var def  =gismu[item+'.full_def'];
+    if (rafsi.length==0) { rafsi='(none)'; }
     var html='<div class="filter_output_item">';
     html+='<span class="gismu_list_gismu">'
 	+'<a onclick="current_i=' + entry +';updateGismu();showCard();return false;">'
         + item + '</a></span>' + '<div class="gloss_list_item">' + gloss + '</div> ';
     if (use_def) {
+	html+='<div class="gismu_list_rafsi">rafsi:  '+rafsi+'</div>';
 	html+='<div class="gismu_list_def">'+def+'</div>';
     }
     html+='</div>';
@@ -216,7 +223,7 @@ function filterOutputItem(item,use_def) {
 function filterGismu() {
 
   var filter=filterRegex();
-// alert(filter);
+
   quiz_list = [];
   var qi_list = [];
   for (e in entries) {
@@ -263,4 +270,24 @@ function glicoFacki() {
     for (var e in gl_list) { html+=filterOutputItem(gl_list[e],1); }
 
     $("#glico_list").html(html);
+}
+
+function rafsiCard() {
+
+    var rafsi_entry=$("#rafsi_input").val().toLowerCase();
+    var gismu_keys = [ ];
+    var count=0;
+    for (var key in rafsi) {
+	if (key.match(rafsi_entry)) { 
+	    gismu_keys[rafsi[key]]=1;
+	    count++;
+	}
+    }
+
+    var html='<div class="label_title">'+count+' matches found:</div>';
+    
+    for (e in gismu_keys) { html += filterOutputItem(e,1); }
+    
+    $("#rafsi_list").html(html);
+
 }

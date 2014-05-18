@@ -9,7 +9,7 @@ my @entries;
 my %gismu;
 
 my $null='';
-my $pretty=0;
+my $pretty=1;
 
 my @infields=qw( gismu rafsi gloss gloss2 full_def notes );
 my @outfields=grep { !/gloss2/ } @infields,'xref'; # ,'entry_num';
