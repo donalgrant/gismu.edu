@@ -36,12 +36,14 @@ $(document).ready(function(){
 
     $(window).resize(function() { setColumns(); });
 
+/*
     $("input[name=rfinterp]:radio").click(function() {	    
 	if ($("input[name=rfinterp]:radio:checked").val().match('bag')) {
 	    $("input[name=f_tie_begin]:checkbox").removeAttr('checked');
 	    $("input[name=f_tie_end]:checkbox"  ).removeAttr('checked');
 	}
     });
+*/
 
     $("#Card").swipe( {
 	swipeLeft:function() { nextGismu() },
@@ -175,28 +177,41 @@ function filterRegex() {
   var filter_option=$("input:radio[name='rfinterp']:checked").val();
   var filter_entry=$("#filter_input").val().toLowerCase();
   var letters=filter_entry.replace(/[^abcdefgijklmnoprstuvxz']/g,"").split('');  // delete all non-gismu content
-
+  var match_begin=$("input:checkbox[name='f_tie_begin']:checked").val();
+  var match_end  =$("input:checkbox[name='f_tie_end']:checked"  ).val();
   var filter;
   switch (filter_option) {
       case "one":
         filter='['+letters.join('')+']';
+        if (match_begin && match_end) {
+	    filter='^'+filter+'.*'+filter+'$';
+	} else {
+            if (match_begin) { filter = '^'+filter; }
+            if (match_end  ) { filter +='$'; }
+	}
         break;
       case "bag":
         letters.sort();
         filter='(?=.*'+letters.join(')(?=.*')+')';
         filter=filter.replace(/(\w).*?\1/,"$1.*$1");
+        if (match_begin) { filter='^(?='+letters.join('|')+')'+filter; }
+        if (match_end  ) { filter+='.*('+letters.join('|')+')$'; }
         break;
       case "list":
         filter=letters.join(".*");
+        if (match_begin) { filter='^'+filter; }
+        if (match_end  ) { filter+='$'; }
         break;
       case "cluster":
         filter=letters.join("");
+        if (match_begin) { filter='^'+filter; }
+        if (match_end  ) { filter+='$'; }
         break;
       default:
         filter=filter_entry;
+        if (match_begin) { filter='^'+filter; }
+        if (match_end  ) { filter+='$'; }
   }   
-  if ($("input:checkbox[name='f_tie_begin']:checked").val()) { filter='^'+filter; }
-  if ($("input:checkbox[name='f_tie_end']:checked"  ).val()) { filter=filter+'$'; }
   return filter;
 }
 
