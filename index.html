@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" type="text/css" href="css/menu.css" media="screen"/>
 <link rel="stylesheet" type="text/css" href="css/grid.css" media="screen"/>
+<link rel="stylesheet" href="font-awesome-4.1.0/css/font-awesome.min.css">
 
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery.touchSwipe.min.js"></script>
@@ -30,7 +31,8 @@ window.scrollTo(0,1);
 	<li><a id="Card_menu"   href="#" title="Card"  >gismu</a></li>
 	<li><a id="Filter_menu" href="#" title="Filter">liste</a></li>
 	<li><a id="Rafsi_menu"  href="#" title="Rafsi" >rafsi</a></li>
-	<li><a id="Glico_menu"   href="#" title="Glico">glico</a></li>
+	<li><a id="Lujvo_menu"  href="#" title="Lujvo" >lujvo</a></li>
+	<li><a id="Glico_menu"  href="#" title="Glico" >glico</a></li>
 	<li><a id="Quiz_menu"   href="#" title="Quiz"  >cipra</a></li>
       </ul>
     </div> <!-- menu -->
@@ -42,12 +44,20 @@ window.scrollTo(0,1);
 	<input id="gismu_label" type="text" onchange="newGismu()"></input>
 	
 	<div id="player" style="float:right">
-          <button class="icon" type="button" onclick="randomGismu()"><img src="imgs/dice.png"></button>
+<!--
+	  <button class="icon" type="button" onclick="randomGismu()"><img src="imgs/dice.png"></button>
           <button class="icon" type="button" onclick="current_i=0; updateGismu()"><img src="imgs/rewind.jpg"></button>
           <button class="icon" type="button" onclick="prevGismu()"><img src="imgs/backward.jpg"></button>
           <button class="icon" type="button" onclick="stopGismu()"><img src="imgs/pause.jpg"></button>
-          <button class="icon" type="button" onclick="playGismu()"><img src="imgs/play.jpg"></button>
+          <button class="icon" type="button" onclick="playGismu()"><i class="fa fa-play"></i></button>
           <button class="icon" type="button" onclick="nextGismu()"><img src="imgs/forward.jpg"></button>
+-->	  
+             <button type="button" onclick="randomGismu()"><i class="fa fa-random fa-3x"></i></button>
+<button type="button" onclick="current_i=0; updateGismu()"><i class="fa fa-refresh fa-3x"></i></button>
+               <button type="button" onclick="prevGismu()"><i class="fa fa-step-backward fa-3x"></i></button>
+               <button type="button" onclick="stopGismu()"><i class="fa fa-stop fa-3x"></i></button>
+               <button type="button" onclick="playGismu()"><i class="fa fa-play fa-3x"></i></button>
+               <button type="button" onclick="nextGismu()"><i class="fa fa-step-forward fa-3x"></i></button>
 	</div>
 	
       </div> <!-- nav -->
@@ -81,6 +91,29 @@ window.scrollTo(0,1);
 	  <input type="checkbox" name="f_tie_begin" onchange="filterGismu()" ><span class="sel">match begin</span><br>
 	  <input type="checkbox" name="f_tie_end"   onchange="filterGismu()" ><span class="sel">match end</span><br>
         </div>
+        <div id="filter_xn" style="display:table-cell; vertical-align:middle">
+	  <select id="xn_min" onchange="sync_xn_max(); filterGismu()">
+	    <option value="1" selected >At least x1 place</option>
+	    <option value="2"          >At least x2 place</option>
+	    <option value="3"          >At least x3 place</option>
+	    <option value="4"          >At least x4 place</option>
+	    <option value="5"          >At least x5 place</option>
+	  </select><br>
+	  <select id="xn_max" onchange="sync_xn_min(); filterGismu()">
+	    <option value="1"          >At most x1 place</option>
+	    <option value="2"          >At most x2 place</option>
+	    <option value="3"          >At most x3 place</option>
+	    <option value="4"          >At most x4 place</option>
+	    <option value="5" selected >At most x5 place</option>
+	  </select><br>
+	  <select id="rafsi_filter" onchange="filterGismu()">
+	    <option value="any" selected >No constraint on rafsi</option>
+	    <option value="one"          >Exactly one short rafsi</option>
+	    <option value="two"          >Exactly two short rafsi</option>
+	    <option value="some"         >One or two short rafsi</option>
+	    <option value="none"         >No short rafsi</option>
+	  </select>
+        </div>
 
       </div> <!-- filter_group -->
 
@@ -105,6 +138,20 @@ window.scrollTo(0,1);
       </div>
 
     </article>  <!-- rafsi -->
+        
+    <article id="Lujvo">
+
+      <div id="nav">
+
+          <input id="lujvo_input" type="text" onchange="lujvoCard()"></input>
+	
+      </div> <!-- nav -->
+
+      <div id="lujvo_result">
+	<p id="lujvo_list"></p>
+      </div>
+
+    </article>  <!-- Lujvo -->
       
     <article id="Quiz">
 

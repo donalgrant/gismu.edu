@@ -8,7 +8,7 @@ var current_i;
 var quiz_list=[ ];
 var qi_current=0;
 
-var articles=[ 'Card', 'Rafsi', 'Filter', 'Quiz', 'Glico' ];
+var articles=[ 'Card', 'Rafsi', 'Lujvo', 'Filter', 'Quiz', 'Glico' ];
 function hideArticles() { for (i in articles) { $("#"+articles[i]).hide(); } }
 
 $(document).ready(function(){
@@ -35,15 +35,6 @@ $(document).ready(function(){
     setColumns();
 
     $(window).resize(function() { setColumns(); });
-
-/*
-    $("input[name=rfinterp]:radio").click(function() {	    
-	if ($("input[name=rfinterp]:radio:checked").val().match('bag')) {
-	    $("input[name=f_tie_begin]:checkbox").removeAttr('checked');
-	    $("input[name=f_tie_end]:checkbox"  ).removeAttr('checked');
-	}
-    });
-*/
 
     $("#Card").swipe( {
 	swipeLeft:function() { nextGismu() },
@@ -235,16 +226,40 @@ function filterOutputItem(item,use_def) {
     return html;
 }
 
+function sync_xn_min() { if ($("#xn_min").val() > $("#xn_max").val()) { $("#xn_min").val($("#xn_max").val()); } }
+function sync_xn_max() { if ($("#xn_max").val() < $("#xn_min").val()) { $("#xn_max").val($("#xn_min").val()); } }
+
+function rafsi_filter(rs,filter) {
+    var r=rs.split(/\s+/);
+    switch (filter) {
+	case "any"  : return 1;
+	case "some" : return (r[0].length>0);
+	case "none" : return (r[0].length<1);
+	case "one"  : return (r.length<2) && (r[0].length>0);
+	case "two"  : return r.length==2;
+	default:  alert("Should never get here!  filter, rs="+filter+","+rs);
+    }
+}
+
 function filterGismu() {
 
   var filter=filterRegex();
+
+  var min_xn='x'+$("#xn_min").val(); 
+  var lim_xn='x'+(1+parseInt($("#xn_max").val())); 
+  var rafsi_select=$("#rafsi_filter").val(); 
 
   quiz_list = [];
   var qi_list = [];
   for (e in entries) {
       if (entries[e].match(filter)) { 
-	  quiz_list.push(entries[e]); 
-	  qi_list.push(e);
+	  // now check for constraints on xn places and number of rafsi
+	  if (    ( gismu[entries[e]+'.full_def'].match(min_xn)) 
+	       && (!gismu[entries[e]+'.full_def'].match(lim_xn)) 
+	       && (rafsi_filter(gismu[entries[e]+'.rafsi'],rafsi_select)) ) {
+	      quiz_list.push(entries[e]); 
+	      qi_list.push(e);
+	  }
       }
   }
   // temp to look at result
@@ -298,11 +313,52 @@ function rafsiCard() {
 	    count++;
 	}
     }
-
     var html='<div class="label_title">'+count+' matches found:</div>';
     
     for (e in gismu_keys) { html += filterOutputItem(e,1); }
     
     $("#rafsi_list").html(html);
+}
+
+
+function lujvoCard() {
+
+    var lujvo_entry=$("#lujvo_input").val().toLowerCase();
+    var gismu_found = [ ];
+    var gloss_found = [ ];
+    var count=0;
+
+    var le=lujvo_entry;
+    while (le.length>0) {
+
+	if (gismu.hasOwnProperty(le.substr(-5)+'.gismu')) {
+	    var g=gismu[le.substr(-5)+'.gismu'];
+	    gismu_found.unshift(g);
+	    gloss_found.unshift(gismu[g+'.gloss']);
+	    count++;
+	    le=le.substr(0,le.length-5);
+	} else {
+	
+	    for (var key in rafsi) {
+		if (key.match(le.substr(-3))) { 
+		    var g=gismu[rafsi[key]+'.gismu'];
+		    gismu_found.unshift(g);
+		    gloss_found.unshift(gismu[g+'.gloss']);
+		    count++;
+		    le=le.substr(0,le.length-3);
+		    break;
+		}
+	    }
+
+	}
+	 
+    }
+
+    var def='<B class="lujvo_gloss">'+gloss_found.join('</B> kind of <B class="lujvo_gloss">')+'</B>';
+    var html='<div class="label_title">'+count+' matches found.  '+def+'</div>';
+    
+    for (e in gismu_found) { html += filterOutputItem(gismu_found[e],1); }
+    
+    $("#lujvo_list").html(html);
 
 }

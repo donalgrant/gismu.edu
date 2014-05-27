@@ -13,7 +13,7 @@ button.icon {
 width:35px;
 }
 
-textarea, input, #def_label, #rafsi_label, #glico_label, #gloss_label, #xref_label, 
+textarea, input, #def_label, #rafsi_label, #lujvo_label, #glico_label, #gloss_label, #xref_label, 
   #gismu_label, #notes_label, #quiz_text, #quiz_result_text {
 /* border:solid 1px #5797ab; 
 -moz-border-radius: 3px;
@@ -37,12 +37,12 @@ font-size:  1.3em;
 margin: 1em 1em 0em 0em;
 }
 
-#gismu_label, #filter_input, #rafsi_input, #quiz_input, #glico_input, #quiz_result {
+#gismu_label, #filter_input, #rafsi_input, #lujvo_input, #quiz_input, #glico_input, #quiz_result {
 font-size:  2.0em;
 color: #050505;
 }
 
-#gismu_label, #rafsi_input, #quiz_input {
+#gismu_label, #rafsi_input, #lujvo_input, #quiz_input {
 width: 30%;
 }
 
@@ -50,12 +50,16 @@ width: 30%;
 width: 110%;
 }
 
+#filter_radio, #filter_xn, #filter_check {
+padding: 1.0em;
+}
+
 #def_label, #notes_label, #xref_label, #quiz_text {
 font-size:  1.5em;
 width: 100%;
 }
 
-#rafsi_label {
+#rafsi_label, #lujvo_label {
 font-size: 2em;
 height: 2.5em;
 width: 40%;
