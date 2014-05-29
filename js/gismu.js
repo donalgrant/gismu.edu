@@ -70,10 +70,13 @@ function selectGismu() {
     entries.sort();  
     // now assign cross-references
     for (e in entries) {
-	gismu[entries[e]+'.entry_num']=e;
-	var r=gismu[entries[e]+'.rafsi'];
+	var g=entries[e];
+	gismu[g+'.entry_num']=e;
+	var r=gismu[g+'.rafsi'];
 	var ra=r.split(/\s+/);
-	for (ir in ra) { rafsi[ra[ir]]=entries[e]; }
+	for (ir in ra) { rafsi[ra[ir]]=g; }  // all short rafsi
+	rafsi[g.substr(0,4)]=g;               // four-letter form rafsi
+	rafsi[g]=g;                          // full gismu is also a rafsi
     }
 }
 
@@ -211,15 +214,15 @@ quizUpdate();
 function filterOutputItem(item,use_def) {
     var entry=gismu[item+'.entry_num'];
     var gloss=gismu[item+'.gloss'];
-    var rafsi=gismu[item+'.rafsi'];
+    var raf  =gismu[item+'.rafsi'];
     var def  =gismu[item+'.full_def'];
-    if (rafsi.length==0) { rafsi='(none)'; }
+    if (raf.length==0) { raf='(none)'; }
     var html='<div class="filter_output_item">';
     html+='<span class="gismu_list_gismu">'
 	+'<a onclick="current_i=' + entry +';updateGismu();showCard();return false;">'
         + item + '</a></span>' + '<div class="gloss_list_item">' + gloss + '</div> ';
     if (use_def) {
-	html+='<div class="gismu_list_rafsi">rafsi:  '+rafsi+'</div>';
+	html+='<div class="gismu_list_rafsi">short rafsi:  '+raf+'</div>';
 	html+='<div class="gismu_list_def">'+def+'</div>';
     }
     html+='</div>';
@@ -237,6 +240,7 @@ function rafsi_filter(rs,filter) {
 	case "none" : return (r[0].length<1);
 	case "one"  : return (r.length<2) && (r[0].length>0);
 	case "two"  : return r.length==2;
+        case "three": return r.length==3;
 	default:  alert("Should never get here!  filter, rs="+filter+","+rs);
     }
 }
@@ -330,32 +334,41 @@ function lujvoCard() {
 
     var le=lujvo_entry;
     while (le.length>0) {
-
-	if (gismu.hasOwnProperty(le.substr(-5)+'.gismu')) {
-	    var g=gismu[le.substr(-5)+'.gismu'];
-	    gismu_found.unshift(g);
-	    gloss_found.unshift(gismu[g+'.gloss']);
-	    count++;
-	    le=le.substr(0,le.length-5);
-	} else {
-	
-	    for (var key in rafsi) {
-		if (key.match(le.substr(-3))) { 
-		    var g=gismu[rafsi[key]+'.gismu'];
+	if (le.substr(-1).match('y')) { le=le.substr(0,le.length-1); continue; }
+	var matching=0;
+	for (var n=5; n>=3; n--) {
+	    if (n<=le.length) {
+//		alert("checking for "+le.substr(-n));
+		if (rafsi.hasOwnProperty(le.substr(-n))) {
+		    var g=rafsi[le.substr(-n)];
 		    gismu_found.unshift(g);
 		    gloss_found.unshift(gismu[g+'.gloss']);
 		    count++;
-		    le=le.substr(0,le.length-3);
+		    le=le.substr(0,le.length-n);
+		    matching=1;
+//		    alert("found for "+g+"; now le="+le);
+		    break;
+		}
+		if ( (n<5) && (le.substr(-1).match(/[nr]/)) && (rafsi.hasOwnProperty(le.substr(-n-1,n))) ) {
+		    var g=rafsi[le.substr(-n-1,n)];
+		    gismu_found.unshift(g);
+		    gloss_found.unshift(gismu[g+'.gloss']);
+		    count++;
+		    le=le.substr(0,le.length-n-1);
+		    matching=1;
 		    break;
 		}
 	    }
-
 	}
-	 
+	if (!matching) {
+//	    alert("no match found for "+le);
+	    gloss_found=[ "failed to match" ]; 
+	    break; 
+	}
     }
 
     var def='<B class="lujvo_gloss">'+gloss_found.join('</B> kind of <B class="lujvo_gloss">')+'</B>';
-    var html='<div class="label_title">'+count+' matches found.  '+def+'</div>';
+    var html='<div class="label_title">"'+def+'"</div>';
     
     for (e in gismu_found) { html += filterOutputItem(gismu_found[e],1); }
     
