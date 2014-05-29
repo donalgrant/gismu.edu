@@ -62,9 +62,9 @@ function selectGismu() {
     entries=[];
     for (var p in gismu) {
 	if (p.match(/[.]gismu/)) { 
-	    if (gismu[p].match(/^.{5}$/)) {
+//	    if (gismu[p].match(/^.{5}$/)) {
 		entries.push(gismu[p]); 
-	    }
+//	    }
 	}
     }
     entries.sort();  
@@ -75,8 +75,10 @@ function selectGismu() {
 	var r=gismu[g+'.rafsi'];
 	var ra=r.split(/\s+/);
 	for (ir in ra) { rafsi[ra[ir]]=g; }  // all short rafsi
-	rafsi[g.substr(0,4)]=g;               // four-letter form rafsi
-	rafsi[g]=g;                          // full gismu is also a rafsi
+	if (g.length>4) {
+	    rafsi[g.substr(0,4)]=g;               // four-letter form rafsi
+	    rafsi[g]=g;                          // full gismu is also a rafsi
+	}
     }
 }
 
@@ -249,7 +251,7 @@ function filterGismu() {
 
   var filter=filterRegex();
 
-  var min_xn='x'+$("#xn_min").val(); 
+  var min_xn=$("#xn_min").val()==0 ? '' : 'x'+$("#xn_min").val(); 
   var lim_xn='x'+(1+parseInt($("#xn_max").val())); 
   var rafsi_select=$("#rafsi_filter").val(); 
 

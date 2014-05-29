@@ -93,13 +93,15 @@ window.scrollTo(0,1);
         </div>
         <div id="filter_xn" style="display:table-cell; vertical-align:middle">
 	  <select id="xn_min" onchange="sync_xn_max(); filterGismu()">
-	    <option value="1" selected >At least x1 place</option>
+	    <option value="0" selected >No minimum xn place</option>
+	    <option value="1"          >At least x1 place</option>
 	    <option value="2"          >At least x2 place</option>
 	    <option value="3"          >At least x3 place</option>
 	    <option value="4"          >At least x4 place</option>
 	    <option value="5"          >At least x5 place</option>
 	  </select><br>
 	  <select id="xn_max" onchange="sync_xn_min(); filterGismu()">
+	    <option value="0"          >No xn places</option>
 	    <option value="1"          >At most x1 place</option>
 	    <option value="2"          >At most x2 place</option>
 	    <option value="3"          >At most x3 place</option>
